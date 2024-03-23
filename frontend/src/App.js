@@ -4,8 +4,8 @@ import Confirmation from "./components/Auth/Confirmation";
 function App() {
   return (
     <div className="App">
-      {/* <Signup/>
-  <Login/> */}
+      <Signup/>
+  <Login/>
   <Confirmation/>
     </div>
   );

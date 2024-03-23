@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Input, Button, Typography, Card } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, MailOutlined, GoogleOutlined, GithubOutlined } from '@ant-design/icons';
 
 const Signup = () => {
     const [form] = Form.useForm();
@@ -11,9 +11,9 @@ const Signup = () => {
     };
   
     return (
-      <div className="flex justify-center items-center h-screen bg-gray-200"> {/* Background color for the entire page */}
+      <div className="flex justify-center items-center h-screen bg-gray-200">
         <div className="w-full max-w-md">
-          <Card className="p-6 shadow-lg bg-white"> {/* Increased shadow and added background color */}
+          <Card className="p-6 shadow-lg bg-white">
             <Typography.Title level={3} className="mb-6 text-center font-semibold">
               Register
             </Typography.Title>
@@ -73,11 +73,29 @@ const Signup = () => {
                 <Input.Password prefix={<LockOutlined />} placeholder="Confirm Password" />
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit" className="w-full bg-blue-500 hover:bg-blue-700"> {/* Blue button with hover effect */}
+                <Button type="primary" htmlType="submit" className="w-full bg-blue-500 hover:bg-blue-700">
                   Register
                 </Button>
               </Form.Item>
             </Form>
+            <div className="flex justify-between mt-4">
+  <Button 
+    icon={<GoogleOutlined />} 
+    className="w-1/2 bg-blue-500  text-white mr-2" // Adjust bg color based on Google theme
+    onClick={() => console.log("Sign up with Google")}
+  >
+    Sign up with Google
+  </Button>
+  <div className="w-1"></div> {/* Add gap between buttons */}
+  <Button 
+    icon={<GithubOutlined />} 
+    className="w-1/2 bg-black text-white" // Adjust bg color based on GitHub theme
+    onClick={() => console.log("Sign up with GitHub")}
+  >
+    Sign up with GitHub
+  </Button>
+</div>
+
           </Card>
           <Typography.Text className="text-center block mt-4">
             Already have an account? <a href="/login">Login</a>
