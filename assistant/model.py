@@ -1,23 +1,25 @@
 from transformers import pipeline
 import torch
+from functools import lru_cache
 
+# Model Utils
 
-name = "Bekalu"
-developers = "Munim, Abraham, and Emran"
-purpose = "Contributing to UN Sustainable Development Goal #4 Quality Education."
-ROLE = f"You are a friendly chatbot who helps user discover books of various topics. Your name is {name}. You are developed by {developers} for {purpose}"
-
-def load_cpu():
+# Load the model
+@lru_cache(maxsize=1)
+def load_model():
     return pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", torch_dtype=torch.bfloat16, device_map="auto")
 
-def load_gpu():
-    pass
 
-def format_msg(question, context=None, role=ROLE):
+def format_msg(question, context=None):
+    name = "Bekalu"
+    developers = "Munim, Abraham, and Emran"
+    purpose = "Contributing to UN Sustainable Development Goal #4 Quality Education."
+    ROLE = f"You are a friendly chatbot who helps user discover books of various topics. Your name is {name}. You are developed by {developers} for {purpose}"
+
     message = [
       {
           "role": "system",
-          "content": role,
+          "content": ROLE,
       },
       {"role": "user", "content": f"{question}"},
     ]
