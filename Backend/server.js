@@ -10,6 +10,8 @@ const app = express();
 const usersRoute = require('./Routes/user');
 // import message routes
 const messagesRoute = require('./Routes/message');
+// import prevKeyword routes
+const prevKeywordRoute = require('./Routes/prevKeyWord');
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +23,7 @@ mongoose.connect('mongodb+srv://emranyonas600:Emran12%40%40@truhacks2024.pvt7yub
 
     
 app.use('/api/users',usersRoute);
+app.use('/api/prevKeyword',prevKeywordRoute);
 app.use('/api/messages',messagesRoute);
 app.get('/', (req, res) => {
         res.send('Hello World');
