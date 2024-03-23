@@ -103,7 +103,7 @@ const verifyEmail = async (req, res) => {
     }
 };
 
-// Login user
+
 // Login user
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
@@ -132,4 +132,3 @@ const loginUser = async (req, res) => {
 };
 
 module.exports = { registerUser, verifyEmail, loginUser };
-
