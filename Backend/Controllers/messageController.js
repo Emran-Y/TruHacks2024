@@ -37,19 +37,28 @@ const getMessages = async (req, res) => {
     // Get the user id
     const userId = req.user._id;
     // Get the page number
-    const page = req.query.page || 1;
+    const page = parseInt(req.query.page) || 1;
+    // Define the limit for messages per page
+    const limit = 10;
 
-    // Get the messages
-    try{
-        const messages = await Message.find({owner:userId})
-        .sort({createdAt:-1})
-        // Paginate the messages
-        .skip((page-1)*10)
-        // Limit the messages to 10 per page
-        .limit(10);
-        return res.status(200).json(messages);
-    }catch(err){
-        res.status(500).json({message:err.message});
+    try {
+        // Count total number of messages for the user
+        const totalMessages = await Message.countDocuments({ owner: userId });
+        // Calculate total number of pages
+        const totalPages = Math.ceil(totalMessages / limit);
+
+        // Get messages for the requested page
+        const messages = await Message.find({ owner: userId })
+            .sort({ createdAt: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit);
+
+        // Calculate if there is a next page
+        const hasNextPage = page < totalPages;
+
+        return res.status(200).json({ messages, currentPage: page, isNext: hasNextPage });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 }
 

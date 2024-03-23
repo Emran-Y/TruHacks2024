@@ -10,3 +10,6 @@ router.post('/send', authGuard, sendMessage);
 // get messages paginated and sorted by createdAt
 router.get('/get/:userId', authGuard, getMessages);
 
+// export the router
+module.exports = router;
+
