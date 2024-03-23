@@ -1,9 +1,9 @@
 import Signup from "./components/Auth/SignUp";
-
+import Login from "./components/Auth/Login";
 function App() {
   return (
     <div className="App">
-  <Signup/>
+  <Login/>
     </div>
   );
 }
