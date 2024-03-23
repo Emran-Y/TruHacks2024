@@ -22,6 +22,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 5,
         maxlength: 1024
+    },
+    verificationCode: {
+        type: Number,
+        required: true
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     }
 });
 
