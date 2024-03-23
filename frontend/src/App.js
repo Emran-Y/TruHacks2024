@@ -1,12 +1,9 @@
-
-import './App.css';
+import Signup from "./components/Auth/SignUp";
 
 function App() {
   return (
     <div className="App">
-   <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+  <Signup/>
     </div>
   );
 }
