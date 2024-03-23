@@ -48,14 +48,14 @@ const Login = () => {
                 </Button>
               </Form.Item>
             </Form>
-            <div className="flex justify-between">
+            <div className="flex justify-end">
               <Typography.Text>
                 <a href="/forgot-password">
                   <ExclamationCircleOutlined className="mr-1" /> Forgot Password?
                 </a>
               </Typography.Text>
             </div>
-            <div className="text-center mt-4">
+            <div className="text-center mt-6">
               <Typography.Text>
                 Don't have an account? <a href="/signup">Sign up</a>
               </Typography.Text>
