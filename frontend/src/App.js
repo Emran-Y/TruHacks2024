@@ -6,6 +6,7 @@ import HomePage from "./components/Home/HomePage";
 import HeaderLayout from './components/Header/Header';
 import { Footer } from 'antd/es/layout/layout';
 import ChatbotComponent from './components/MainFunctionality/ChatBot/ChatBot';
+import SearchPage from './components/MainFunctionality/Search/Searchi';
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/confirmation" element={<Confirmation />} />
-          <Route path="/chatbot" element={<ChatbotComponent />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
+        <ChatbotComponent />
         <Footer/>
       </div>
     </Router>

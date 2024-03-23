@@ -17,14 +17,19 @@ const HeaderLayout = () => {
           </Link>
         </div>
         {/* Navigation Menu */}
-        <nav className="text-gray-700">
+        <nav className="flex items-center text-gray-700 ml-4">
           {/* Home Link */}
           <Link to="/" className="font-semibold mr-4">Home</Link>
           {/* Sign Up Link */}
           <Link to="/signup" className="font-semibold mr-4">Sign Up</Link>
           {/* Login Link */}
-          <Link to="/login" className="font-semibold">Login</Link>
-          {/* Add more menu items as needed */}
+          <Link to="/login" className="font-semibold mr-4">Login</Link>
+          {/* About Us Link */}
+          <Link to="/about" className="font-semibold mr-4">About Us</Link>
+          {/* Contact Link */}
+          <Link to="/contact" className="font-semibold mr-4">Contact</Link>
+          {/* Search Link */}
+          <Link to="/search" className="font-semibold">Search</Link>
         </nav>
       </div>
     </header>

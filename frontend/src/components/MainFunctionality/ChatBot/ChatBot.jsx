@@ -133,11 +133,11 @@ const SimpleChatbot = () => {
         <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: '9999' }}>
   {isOpen && (
     <div style={{ position: 'relative' }}>
+      <CloseOutlined onClick={toggleChatbot} style={{ position: 'absolute', top: '-30px', right: '5px', fontSize: '24px', cursor: 'pointer', zIndex: '1001' }} />
       <ChatBot
         steps={steps}
         handleEnd={handleEnd}
       />
-      <CloseOutlined onClick={toggleChatbot} style={{ position: 'absolute', bottom: 'calc(100% + 10px)', right: '5px', fontSize: '24px', cursor: 'pointer', zIndex: '1000' }} />
     </div>
   )}
   {!isOpen && (
