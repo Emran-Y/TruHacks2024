@@ -106,47 +106,70 @@ const verifyEmail = async (req, res) => {
 
 // Login user
 const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
+  try {
     // Find the user by email
     const user = await User.findOne({ email });
 
     if (!user) {
-        return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: 'Invalid email or password' });
     }
 
     // Check if the password is correct
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-        return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: 'Invalid email or password' });
     }
 
     // Check if the email is verified
     if (!user.isVerified) {
-        return res.status(400).json({ message: 'Email not verified' });
+      return res.status(400).json({ message: 'Email not verified' });
     }
 
-    // Generate and return a JWT token
-    const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '30d' });
-    res.header('x-auth-token', token).status(200).json({ token, user });
+    // Generate a JWT token
+    const token = jwt.sign({ userId: user._id }, 'jwtPrivateKey', { expiresIn: '30d' });
+
+    console.log('Login successful. Token:', token); // Add this log statement
+
+    // Return the token and user information
+    res.status(200).json({ token, user: _.pick(user, ['_id', 'fullName', 'email']) });
+  } catch (error) {
+    console.error('Error logging in:', error);
+    res.status(500).json({ message: 'Error logging in' });
+  }
 };
 
-// get user datas for profile page
 
+// Get user data for profile page
+// Get user data for profile page
 const getUser = async (req, res) => {
-  // Get the user id
-  const userId = req.user._id;
-  // Get the user
-  try{
-      // Get the user from the database
-      const user = await User({ _id: userId });
-      // Return the user
-      return res.status(200).json(_.pick(user, ['fullName', 'email']));
-  }
-  catch(err){
-      // If there is an error return the error message
-      res.status(500).json({message:err.message});
+  try {
+    // Check if req.user is available
+    if (!req.user || !req.user._id) {
+      console.error('User id not found in request');
+      return res.status(400).json({ message: 'User id not found in request' });
+    }
+
+    // Get the user id
+    const userId = req.user._id;
+
+    // Get the user from the database
+    const user = await User.findById(userId).select('fullName email');
+
+    if (!user) {
+      console.error('User not found');
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return the user
+    return res.status(200).json(user);
+  } catch (err) {
+    // If there is an error, log and return an error response
+    console.error('Error getting user:', err);
+    return res.status(500).json({ message: 'Error getting user' });
   }
 }
+
 
 module.exports = { registerUser, verifyEmail, loginUser ,getUser};

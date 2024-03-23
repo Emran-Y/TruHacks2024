@@ -1,31 +1,34 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../Models/user");
+const User = require("../Models/user"); // Use require without curly braces for User
 
-// Middleware to check if the user is authenticated
 const authGuard = async (req, res, next) => {
-  let token;
-  // Check if the token is provided
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    try {
-      // Get the token from the header
-      token = req.headers.authorization.split(" ")[1];
-      // Verify the token
-      const decoded = jwt.verify(token, "jwtPrivateKey");
-      // Get the user from the database
-      req.user = await User.findOne({ _id: decoded.userId }).select(
-        "-password"
-      );
-      next();
-    } catch (error) {
-      // If the token is invalid
-      res.status(401).json({ message: "Not Authorized, token failed" });
+  try {
+    // Check if the token is provided
+    const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+    if (!token) {
+      console.log("No token provided");
+      return res.status(401).json({ message: "Not Authorized, token failed" });
     }
-  }
-  if (!token) {
-    // If the token is not provided
+
+    // Verify the token
+    const decoded = jwt.verify(token, "jwtPrivateKey");
+    console.log("Decoded token:", decoded); // Log the decoded token
+
+    // Get the user from the database
+    const user = await User.findById(decoded.userId).select("-password");
+    console.log("User:", user); // Log the user object
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(401).json({ message: "Not Authorized, token failed" });
+    }
+
+    // Attach the user object to the request
+    req.user = user;
+    next();
+  } catch (error) {
+    // If the token is invalid
+    console.error("Error verifying token:", error); // Log the error
     res.status(401).json({ message: "Not Authorized, token failed" });
   }
 };
