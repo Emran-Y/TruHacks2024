@@ -3,8 +3,12 @@ const router = express.Router();
 const {
     registerUser,
     verifyEmail,
-    loginUser
+    loginUser,
+    getUser
+
 } = require('../Controllers/userController');
+
+const authGuard = require('../Middlewares/authGuard')
 
 // Register user
 router.post('/register', registerUser);
@@ -14,5 +18,9 @@ router.post('/verify-email', verifyEmail);
 
 // Login user
 router.post('/login', loginUser);
+
+// get user
+router.get('/user',authGuard, getUser)
+
 
 module.exports = router;
