@@ -10,7 +10,7 @@ const HomePage = () => {
         <Typography.Paragraph>
           Explore a vast collection of free books and articles. Find resources to enhance your knowledge in various fields.
         </Typography.Paragraph>
-        <a to="/signup">
+        <a href="/signup">
           <Button type="primary" size="large" className="mt-4" style={{ backgroundColor: '#1890ff', borderColor: '#1890ff' }}>
             Get Started
           </Button>
