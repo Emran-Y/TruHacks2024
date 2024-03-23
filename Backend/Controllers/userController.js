@@ -1,5 +1,8 @@
+// importing mongoose
 const mongoose = require('mongoose');
+// importing the user model and the user validator
 const {User, userValidator} = require('../Models/user');
+// importing jwt, bcrypt and lodash
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const _ = require('lodash')
@@ -13,7 +16,9 @@ const registerUser = async (req, res) => {
         return res.status(400).json({message:'Please provide all fields'});
     }
 
+    // Validate the user input using the userValidator function
     const { error } = userValidator(req.body);
+    // If there is an error return the error message
     if (error) return res.status(400).json({ message: error.details[0].message });
   
 
@@ -45,14 +50,15 @@ const registerUser = async (req, res) => {
               expiresIn: "30d",
             }
           );
-
+          // Return the token
           return res.status(200).json(
-            _.pick(savedUser, ['_id', 'fullName', 'email', 'token'])
+            _.pick(savedUser, ['token'])
             )
       
         
     }
     catch(err){
+        // If there is an error return the error message 
         res.status(500).json({message:err.message});
     }
 
@@ -68,7 +74,7 @@ const loginUser = async (req, res) => {
         return res.status(400).json({message:'Please provide all fields'});
     }
 
-    // Check if the user is registered
+    // check if the user is registered for security reasons we should not specify which field is incorrect
     let user = await User.findOne({ email: req.body.email });
     if (!user) {
         return res.status(400).json({message:'Invalid email or password'});
@@ -76,6 +82,7 @@ const loginUser = async (req, res) => {
 
     // Check if the password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password);
+    // If the password is incorrect return an error message , Invalid email or password for security reasons we should not specify which field is incorrect
     if (!validPassword) {
         return res.status(400).json({message:'Invalid email or password'});
     }
@@ -88,10 +95,28 @@ const loginUser = async (req, res) => {
           expiresIn: "30d",
         }
       );
-  
+    // Return the token
     return res.status(200).json(
-        _.pick(user, ['_id', 'fullName', 'email', 'token'])
+        _.pick(user, ['token'])
         )
+}
+
+// get user datas for profile page
+
+const getUser = async (req, res) => {
+    // Get the user id
+    const userId = req.user._id;
+    // Get the user
+    try{
+        // Get the user from the database
+        const user = await User({ _id: userId });
+        // Return the user
+        return res.status(200).json(_.pick(user, ['fullName', 'email']));
+    }
+    catch(err){
+        // If there is an error return the error message
+        res.status(500).json({message:err.message});
+    }
 }
 
 
@@ -99,3 +124,4 @@ const loginUser = async (req, res) => {
 
 module.exports.loginUser = loginUser;
 module.exports.registerUser = registerUser;
+module.exports.getUser = getUser;
