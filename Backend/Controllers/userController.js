@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('../Models/user');
+const {User, userValidator} = require('../Models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const _ = require('lodash')
@@ -12,6 +12,10 @@ const registerUser = async (req, res) => {
     if ( !req.body.fullName || !req.body.email || !req.body.password) {
         return res.status(400).json({message:'Please provide all fields'});
     }
+
+    const { error } = userValidator(req.body);
+    if (error) return res.status(400).json({ message: error.details[0].message });
+  
 
     // Check if the user is already registered
     let user = await User.findOne({ email: req.body.email });
