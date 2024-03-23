@@ -131,4 +131,22 @@ const loginUser = async (req, res) => {
     res.header('x-auth-token', token).status(200).json({ token, user });
 };
 
-module.exports = { registerUser, verifyEmail, loginUser };
+// get user datas for profile page
+
+const getUser = async (req, res) => {
+  // Get the user id
+  const userId = req.user._id;
+  // Get the user
+  try{
+      // Get the user from the database
+      const user = await User({ _id: userId });
+      // Return the user
+      return res.status(200).json(_.pick(user, ['fullName', 'email']));
+  }
+  catch(err){
+      // If there is an error return the error message
+      res.status(500).json({message:err.message});
+  }
+}
+
+module.exports = { registerUser, verifyEmail, loginUser ,getUser};
