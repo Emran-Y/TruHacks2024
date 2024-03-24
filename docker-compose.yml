@@ -1,21 +1,31 @@
-version: "3"
-
+version: "3.8"
 services:
-  assistant:
-    build: ./assistant
+  frontend:
+    build: ./frontend
     ports:
-      - "8000:8000"
+      - "3000:3000"
     depends_on:
       - backend
+      - assistant
+    networks:
+      - fullstack
 
   backend:
     build: ./backend
     ports:
-      - "3000:3000"
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "8080:8080"
+      - "4003:4003"
     depends_on:
-      - backend
+      - assistant
+    networks:
+      - fullstack
+
+  assistant:
+    build: ./assistant
+    ports:
+      - "8000:8000"
+    networks:
+      - fullstack
+
+networks:
+  fullstack:
+    driver: bridge
