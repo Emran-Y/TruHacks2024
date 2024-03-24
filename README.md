@@ -42,7 +42,7 @@ State management in the frontend is implemented using the Context API, allowing 
 
 ## Team
 
-- **Abdulmunim**: Software Engineer with expertise in NLP and machine learning.
+- **Abdulmunim**: Software Engineer with expertise in NLP and Machine learning.
   
 - **Emran**: Backend Engineer
   
