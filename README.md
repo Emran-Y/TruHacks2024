@@ -4,6 +4,7 @@ KnowledgeHub is a platform designed for TruHacks2024 hackathon, aimed at providi
 
 ## Features
 
+
 - **AI Assistance for Book Recommendation**: Utilizing the LLamda model implemented with FastAPI, our AI assistant named Bekalu provides personalized book recommendations based on user preferences.
   
 - **Web Dashboard**: Built using React and Express, the web dashboard offers a user-friendly interface for accessing various features including AI-supported search, library system management, favorites, and user authentication functionalities like login and logout.
