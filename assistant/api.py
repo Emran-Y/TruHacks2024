@@ -1,7 +1,13 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from pydantic import BaseModel
-from .model import generate_response, load_model
+from .llama_model import generate_response, load_model
 from functools import lru_cache
+
+"""
+This endpoint is for manually finetuned model from huggingface.
+Due to limited resources, we will use Poe API instead of local finetuned model
+
+"""
 
 app = FastAPI()
 
