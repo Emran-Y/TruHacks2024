@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const authGuard = require('../Middlewares/authGuard');
-const { getPrevKeyword } = require('../Controllers/prevKeyWordController');
+const { getPrevKeyword ,addPrevKeyword} = require('../Controllers/prevKeyWordController');
+
 
 // fetch the keyword of the user from the database
-router.get('/prevKeyword',authGuard, getPrevKeyword);
+router.get('/get',authGuard, getPrevKeyword);
+// post if doesn't exist , pull if exist
+router.post('/add',authGuard, addPrevKeyword);
 
 
 module.exports = router;
