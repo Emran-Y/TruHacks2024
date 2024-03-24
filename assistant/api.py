@@ -1,9 +1,5 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from pydantic import BaseModel
-# from .model import generate_response, load_model
-from model import generate_response, load_model
-
-from functools import lru_cache
 
 app = FastAPI()
 
@@ -15,9 +11,11 @@ def load_model_at_startup():
     global pipe
     pipe = load_model()
 
-# load_model_at_startup()
+# call the function to load the model at startup
 load_model_at_startup()
 
+
+# Define the request body
 class ChatRequest(BaseModel):
     msg: str
 

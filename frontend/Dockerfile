@@ -1,15 +1,13 @@
-# Base image
-FROM node:18-alpine
-
-
+# Build stage
+FROM node:latest as build-stage
 WORKDIR /app
-
-# install dependencies
 COPY package*.json ./
-RUN npm install
-
-# Copy application code
+RUN npm install --force
 COPY . .
+RUN npm run build
 
-# Command to build the frontend application
-CMD [ "npm", "start" ]
+# Production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/build /usr/share/nginx/html
+EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]

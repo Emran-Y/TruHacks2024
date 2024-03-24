@@ -1,13 +1,8 @@
-FROM node:18-alpine
-
+FROM node:latest
 WORKDIR /app
-
-# Copy and install dependencies
 COPY package*.json ./
 RUN npm install
-
-# Copy application code
 COPY . .
-
-# Command to run the backend application
-CMD [ "npm", "start" ]
+EXPOSE 3000
+EXPOSE 4003
+CMD ["node", "server.js"]

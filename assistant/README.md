@@ -1,6 +1,6 @@
-# Bekalu - FastAPI Assistant
+# Bekalu - AI Book Assistant
 
-Bekalu is a FastAPI-based assistant that allows users to interact with a chatbot and receive responses based on their input messages.
+Bekalu is AI-based conversational assistant that allows users to interact with him and receive recommendations for books on various topics. Bekalu's Lllama Model version is built using the Llama-2B model, which is a transformer-based language model developed by Meta. It uses Poe as remote infernce server to handle the model inference.
 
 ## Installation
 
@@ -48,6 +48,7 @@ Bekalu is a FastAPI-based assistant that allows users to interact with a chatbot
 ## Additional Information
 
 - Bekalu is the name of the assistant.
+- Due to payment restrictions in Ethiopia, we faced challenges with deploying the model, hence the remote inference setup.
 - Bekalu's purpose is to contribute to UN Sustainable Development Goal #4 Quality Education by helping users discover books on various topics.
 - The chatbot model is loaded at startup for faster response times.
 - Caching is implemented for better performance using LRU caching.

@@ -1,5 +1,6 @@
-transformers==4.38.2
-torch
-accelerate
 fastapi
 uvicorn
+poe-api
+python-dotenv
+poe_api_wrapper
+nest_asyncio
