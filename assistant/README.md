@@ -18,7 +18,7 @@ Bekalu is AI-based conversational assistant that allows users to interact with h
 
    ```bash
    uvicorn assistant.api:app --reload (from the root directory of the project)
-   uvicorn api:app --reload (from the assistant directory)
+   uvicorn main:app --reload (from the assistant directory)
    ```
 
    This will start the FastAPI Development server, and the API will be accessible at `http://localhost:8000`. You can remove the --reload flag if you don't want the server to reload automatically on code changes.
