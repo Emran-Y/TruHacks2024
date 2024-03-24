@@ -2,14 +2,15 @@ from transformers import pipeline
 import torch
 from functools import lru_cache
 
-# Model Utils
-
 # Load the model
 @lru_cache(maxsize=1)
 def load_model():
     return pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", torch_dtype=torch.bfloat16, device_map="auto")
 
+<<<<<<< HEAD:assistant/model.py
 # Format the message
+=======
+>>>>>>> refs/remotes/origin/main:assistant/llama_model.py
 def format_msg(question, context=None):
     name = "Bekalu"
     developers = "Munim, Abraham, and Emran"

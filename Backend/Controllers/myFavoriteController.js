@@ -24,11 +24,16 @@ const addToFavorite = async (req, res) => {
         await item.save();
 
         // Find or create the user's favorites list and update it
-        let myFavorites = await MyFavorite.findOneAndUpdate(
-            { owner: req.user._id },
-            { $addToSet: { myFavorites: item._id } },
-            { upsert: true, new: true }
-        );
+
+        let myFavorites = await MyFavorite.findOne({ owner: req.user._id });
+        console.log(myFavorites);
+        if (!myFavorites) {
+            console.log("Creating new favorites list");
+            myFavorites = new MyFavorite({ owner: req.user._id, myFavorites: [item._id] });
+            await myFavorites.save();
+        } else {
+            myFavorites.myFavorites.push(item._id);
+        }
 
         res.status(201).json(item);
     } catch (error) {
@@ -63,6 +68,7 @@ const getFavorites = async (req, res) => {
         let myFavorites = await MyFavorite.findOne({ owner: req.user._id }).populate({
             path: 'myFavorites',
             options: {
+                sort: { createdAt: -1 },
                 limit: limit,
                 skip: (page - 1) * limit
             }
