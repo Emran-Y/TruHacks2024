@@ -9,7 +9,7 @@ from functools import lru_cache
 def load_model():
     return pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", torch_dtype=torch.bfloat16, device_map="auto")
 
-
+# Format the message
 def format_msg(question, context=None):
     name = "Bekalu"
     developers = "Munim, Abraham, and Emran"
@@ -26,6 +26,7 @@ def format_msg(question, context=None):
 
     return message
 
+# Generate the response
 def generate_response(question, pipe, context=None):
     message = format_msg(question, context)
     prompt = pipe.tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True)
