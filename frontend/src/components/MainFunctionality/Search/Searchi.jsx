@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Input, Button, Card, Row, Col, Avatar, Menu, Divider, Modal } from 'antd';
-import { SearchOutlined, HeartOutlined,EyeOutlined, DownloadOutlined, RightOutlined, BulbOutlined, TagOutlined } from '@ant-design/icons';
+import { Input, Button,Space, Card, Row, Col, Avatar, Menu, Divider, Modal, DatePicker, Select } from 'antd';
+import { SearchOutlined, HeartOutlined, EyeOutlined, DownloadOutlined, RightOutlined, BulbOutlined, TagOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
+const { RangePicker } = DatePicker;
+const { Option } = Select
 
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -87,13 +89,27 @@ const SearchPage = () => {
   return (
     <div style={{ padding: '20px', display: 'flex', justifyContent: 'space-between' }}>
       <div style={{ flex: '1', marginRight: '20px' }}>
+      <div style={{ marginBottom: '20px' }}>
+  <Card style={{ borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+    <div style={{ padding: '20px' }}>
+      <Space>
         <Input
           prefix={<SearchOutlined />}
-          placeholder="Search for a book..."
-          style={{ width: 300, marginBottom: '20px' }}
+          placeholder="Search for a book, author, genre..."
+          style={{ width: '300px' }}
         />
-
-
+        <RangePicker style={{ width: '250px' }} />
+        <Select defaultValue="all" style={{ width: '120px' }}>
+          <Option value="all">All Genres</Option>
+          {categories.map((category, index) => (
+            <Option key={index} value={category}>{category}</Option>
+          ))}
+        </Select>
+        <Button type="primary">Search</Button>
+      </Space>
+    </div>
+  </Card>
+</div>
         <Button type="primary"  className="bg-blue-500 ml-5" onClick={handleSearch}>Search</Button>
 
         <Button type="link" onClick={handleOpenModal} style={{ fontSize: '24px' }}>
