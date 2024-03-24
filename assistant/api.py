@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from pydantic import BaseModel
-from .model import generate_response, load_model
+# from .model import generate_response, load_model
+from model import generate_response, load_model
+
 from functools import lru_cache
 
 app = FastAPI()

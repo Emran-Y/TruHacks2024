@@ -1,0 +1,34 @@
+/* styles.css */
+.custom-table {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  
+  .even-row {
+    background-color: #c4ddf6; /* Light Gray */
+  }
+  
+  .odd-row {
+    background-color: #e7ebf2; /* Medium Gray */
+  }
+
+  .line-chart-section {
+    padding-top: 60px;
+  }
+  
+  .line-chart-section .container {
+    max-width: 800px;
+  }
+  
+  .line-chart-section h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  /* Adjust as needed */
+  .line-chart-section canvas {
+    max-width: 100%;
+  }
+  
+  

@@ -1,64 +1,85 @@
 import axios from 'axios';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { API_USERS_URL } from '../Api';
+import { useQuery } from 'react-query';
 
-// Function to register a new user
-const registerUser = async ({ fullName, email, password }) => {
+const registerUser = async (userData) => {
   try {
-    const response = await axios.post(`${API_USERS_URL}/register`, { fullName, email, password });
+    const response = await axios.post(`${API_USERS_URL}/register`, userData);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message);
+    throw new Error(error.response.data.message || 'An error occurred while registering user');
   }
 };
 
-// Function to verify user's email
-const verifyEmail = async ({ email, verificationCode }) => {
+const verifyEmail = async (verificationData) => {
   try {
-    const response = await axios.post(`${API_USERS_URL}/verify-email`, { email, verificationCode });
+    const response = await axios.post(`${API_USERS_URL}/verify-email`, verificationData);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message);
+    throw new Error(error.response.data.message || 'An error occurred while verifying email');
   }
 };
 
-// Function to log in a user
-const loginUser = async ({ email, password }) => {
+const loginUser = async (loginData) => {
   try {
-    const response = await axios.post(`${API_USERS_URL}/login`, { email, password });
+    const response = await axios.post(`${API_USERS_URL}/login`, loginData);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message);
+    throw new Error(error.response.data.message || 'An error occurred while logging in');
   }
 };
 
-// Function to get user details
-const getUser = async () => {
-  try {
-    const response = await axios.get(`${API_USERS_URL}/user`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message);
-  }
+const useRegisterUserMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(registerUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users');
+    },
+  });
 };
 
-// React Query mutation for user registration
-const useRegisterMutation = () => useMutation(registerUser);
+const useVerifyEmailMutation = () => {
+  const queryClient = useQueryClient();
 
-// React Query mutation for verifying user's email
-const useVerifyEmailMutation = () => useMutation(verifyEmail);
+  return useMutation(verifyEmail, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users');
+    },
+  });
+};
 
-// React Query mutation for user login
-const useLoginMutation = () => useMutation(loginUser);
+const getUsers = async () => {
+  try {
+    const response = await axios.get(`${API_USERS_URL}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'An error occurred while fetching users');
+  }
+};
+const useLoginUserMutation = () => {
+  const queryClient = useQueryClient();
 
-// React Query query for getting user details
-const useUserQuery = () => useQuery('user', getUser);
+  return useMutation(loginUser, {
+    onSuccess: (data) => {
+      // Handle successful login, e.g., store token in local storage
+      localStorage.setItem('token', data.token);
+      // Invalidate user data query to trigger refetch
+      queryClient.invalidateQueries('users');
+    },
+  });
+};
 
-const AuthService = {
-  useRegisterMutation,
+const useGetUsersQuery = () => {
+  return useQuery('users', getUsers);
+};
+
+
+
+export {
+  useRegisterUserMutation,
   useVerifyEmailMutation,
-  useLoginMutation,
-  useUserQuery,
+  useLoginUserMutation,
+  useGetUsersQuery,
 };
-
-export default AuthService;

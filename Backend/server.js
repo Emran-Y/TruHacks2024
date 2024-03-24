@@ -16,7 +16,7 @@ const prevKeywordRoute = require('./Routes/prevKeyWord');
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://emranyonas600:Emran12%40%40@truhacks2024.pvt7yub.mongodb.net')
+mongoose.connect('mongodb+srv://yotor:abrham@fileuploderproject.hwr6j8k.mongodb.net/hackaton?retryWrites=true&w=majority')
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...'));
 
