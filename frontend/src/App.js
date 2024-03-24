@@ -5,7 +5,9 @@ import Confirmation from "./components/Auth/Confirmation";
 import HomePage from "./components/Home/HomePage";
 import HeaderLayout from './components/Header/Header';
 import { Footer } from 'antd/es/layout/layout';
-import Chatbot from './components/Auth/Chatbot';
+import ChatbotComponent from './components/MainFunctionality/ChatBot/ChatBot';
+import SearchPage from './components/MainFunctionality/Search/Searchi';
+import WizardSteps from './components/MainFunctionality/Wizard/WizardSteps';
 
 function App() {
   return (
@@ -16,9 +18,11 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/confirmation" element={<Confirmation />} />
-          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/confirm" element={<Confirmation />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/wizard" element={<WizardSteps />} />
         </Routes>
+        <ChatbotComponent />
         <Footer/>
       </div>
     </Router>
