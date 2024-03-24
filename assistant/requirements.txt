@@ -2,3 +2,5 @@ fastapi
 uvicorn
 poe-api
 python-dotenv
+poe_api_wrapper
+nest_asyncio
